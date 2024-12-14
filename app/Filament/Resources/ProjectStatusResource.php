@@ -18,6 +18,8 @@ class ProjectStatusResource extends Resource
     protected static ?string $model = ProjectStatus::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Settings';
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
@@ -44,7 +46,12 @@ class ProjectStatusResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'รอการอนุมัติ' => 'warning',
+                        'อนุมัติแล้ว' => 'success',
+                    }),
                 Tables\Columns\TextColumn::make('status')
                     ->numeric()
                     ->sortable(),

@@ -13,6 +13,11 @@ class ProjectHead extends Model
         'status_id',
         'start_date',
         'end_date',
+        'images'
+    ];
+
+    protected $casts = [
+        'images' => 'array',
     ];
 
     public function company()

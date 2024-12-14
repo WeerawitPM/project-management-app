@@ -22,6 +22,8 @@ class ProjectHeadResource extends Resource
     protected static ?string $model = ProjectHead::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Projects';
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
@@ -43,8 +45,13 @@ class ProjectHeadResource extends Resource
                     ->options(ProjectStatus::all()->pluck('name', 'id')),
                 Forms\Components\DatePicker::make('start_date')
                     ->required(),
-                Forms\Components\DatePicker::make('end_date')
+                Forms\Components\DatePicker::make('end_date'),
                 // ->required(),
+                Forms\Components\FileUpload::make('images')
+                    ->image()
+                    ->multiple() // เพิ่มบรรทัดนี้เพื่อรองรับการอัปโหลดหลายไฟล์
+                    ->imageEditor()
+                    ->directory('images'),
             ]);
     }
 
@@ -63,20 +70,19 @@ class ProjectHeadResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('company.name')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('assign.name')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('start_date')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('end_date')
-                    ->date()
-                    ->sortable(),
+                    ->sortable()
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'รอการอนุมัติ' => 'warning',
+                        'อนุมัติแล้ว' => 'success',
+                    }),
+                Tables\Columns\TextColumn::make('start_date')->date()->sortable(),
+                Tables\Columns\TextColumn::make('end_date')->date()->sortable(),
+                Tables\Columns\ImageColumn::make('images'),
             ])
             ->filters([
                 //

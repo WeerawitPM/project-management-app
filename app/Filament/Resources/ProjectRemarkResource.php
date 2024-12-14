@@ -14,12 +14,15 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\RichEditor;
 
 class ProjectRemarkResource extends Resource
 {
     protected static ?string $model = ProjectRemark::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Projects';
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -29,13 +32,12 @@ class ProjectRemarkResource extends Resource
                     ->required()
                     ->label('Project')
                     ->options(ProjectHead::all()->pluck('name', 'id')),
-                Forms\Components\Textarea::make('remark')
-                    ->required()
+                RichEditor::make('remark')
                     ->columnSpanFull(),
                 Forms\Components\DatePicker::make('start_date')
                     ->required(),
                 Forms\Components\DatePicker::make('end_date')
-                    // ->required(),
+                // ->required(),
             ]);
     }
 
