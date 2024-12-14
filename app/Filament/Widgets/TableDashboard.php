@@ -48,7 +48,9 @@ class TableDashboard extends BaseWidget
                 Action::make('View')
                     ->button(),
                 Action::make('Detail')
-                    ->button(),
+                    ->button()
+                    ->url(fn(ProjectHead $record): string => 'detail')
+                    ->openUrlInNewTab()
             ]);
     }
 }
