@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class ProjectImage extends Model
 {
     protected $fillable = [
-        'name',
+        'image',
         'project_head_id',
+    ];
+
+    protected $casts = [
+        'image' => 'array',
     ];
 
     public function project_head()

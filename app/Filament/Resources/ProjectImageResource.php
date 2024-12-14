@@ -27,11 +27,12 @@ class ProjectImageResource extends Resource
             ->schema([
                 Forms\Components\FileUpload::make('image')
                     ->image()
+                    ->multiple() // เพิ่มบรรทัดนี้เพื่อรองรับการอัปโหลดหลายไฟล์
                     ->required(),
                 Select::make('project_head_id')
                     ->required()
                     ->label('Project')
-                    ->options(ProjectHead::all()->pluck('name', 'id')),
+                    ->options(ProjectHead::query()->pluck('name', 'id')->toArray()),
             ]);
     }
 

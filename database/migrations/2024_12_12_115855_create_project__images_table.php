@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('project_images', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->foreignId('project_head_id')
                 ->nullable()
                 ->constrained('project_heads')
