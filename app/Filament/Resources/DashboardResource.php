@@ -84,6 +84,7 @@ class DashboardResource extends Resource
         return [
             'index' => Pages\ListDashboards::route('/'),
             'view' => Pages\ViewDashboard::route('/{record}'),
+            'remarks' => Pages\Remarks::route('/{record}/remarks'),
             // 'detail' => Pages\DetailDashboard::route('/{record}/detail'),
             // 'edit' => Pages\EditDashboard::route('/{record}/edit'),
         ];

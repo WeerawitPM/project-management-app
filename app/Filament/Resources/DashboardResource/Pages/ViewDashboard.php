@@ -4,6 +4,7 @@ namespace App\Filament\Resources\DashboardResource\Pages;
 
 use App\Filament\Resources\DashboardResource;
 use App\Models\ProjectHead;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
@@ -19,10 +20,11 @@ class ViewDashboard extends Page
     // protected static ?string $breadcrumb = 'View';
     protected static ?string $pluralLabel = 'View Project';
     protected static ?string $title = 'View Project';
-    public function getBreadcrumb(): ?string
-    {
-        return null;
-    }
+    protected static ?string $breadcrumb = 'View Project';
+    // public function getBreadcrumb(): ?string
+    // {
+    //     return null;
+    // }
 
     public $data = [];
     public function mount()
@@ -44,6 +46,15 @@ class ViewDashboard extends Page
             $this->data = $data;
         }
         // dd($this->data['images']);
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('View Remarks')
+                ->icon('heroicon-o-eye')
+                ->url(DashboardResource::getUrl('remarks', ['record' => $this->data['id']])),
+        ];
     }
 
     protected function getFormSchema(): array
