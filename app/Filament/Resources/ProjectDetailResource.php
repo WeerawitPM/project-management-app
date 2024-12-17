@@ -9,11 +9,13 @@ use App\Models\ProjectDetailStatus;
 use App\Models\ProjectHead;
 use App\Models\ProjectPhase;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Grouping\Group;
@@ -49,14 +51,15 @@ class ProjectDetailResource extends Resource
                         return []; // คืนค่าว่างถ้าไม่ได้เลือก project_head
                     }),
                 // ->options(ProjectPhase::all()->pluck('name', 'id')),
-                Forms\Components\DatePicker::make('start_date')
-                    ->required(),
-                Forms\Components\DatePicker::make('end_date')
-                    ->required(),
+                // Forms\Components\DatePicker::make('start_date')
+                //     ->required(),
+                // Forms\Components\DatePicker::make('end_date')
+                //     ->required(),
                 Select::make('status_id')
                     ->required()
                     ->label('Project status')
                     ->options(ProjectDetailStatus::all()->pluck('name', 'id')),
+                TextInput::make('days')
             ]);
     }
 
@@ -74,7 +77,7 @@ class ProjectDetailResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('id')
-                    ->label('Project')
+                    ->label('Id')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('project_head.name')
                     ->label('Project')
