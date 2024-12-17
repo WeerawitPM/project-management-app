@@ -16,6 +16,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectHeadResource extends Resource
 {
@@ -24,6 +25,12 @@ class ProjectHeadResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'Projects';
     protected static ?int $navigationSort = 1;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        // ตรวจสอบว่า user ที่ล็อกอินมี role เป็น 'user' หรือไม่
+        return !Auth::user()->hasRole('user');
+    }
 
     public static function form(Form $form): Form
     {

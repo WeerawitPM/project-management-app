@@ -33,7 +33,7 @@ class DashboardResource extends Resource
         return $table
             ->query(
                 ProjectHead::query()
-                    ->selectRaw('*, (julianday(end_date) - julianday(start_date) + 1) as duration')
+                    ->selectRaw('*, (end_date::date - start_date::date + 1) as duration')
             )
             ->defaultSort("id", 'desc')
             ->columns([
@@ -63,7 +63,7 @@ class DashboardResource extends Resource
                 Tables\Columns\TextColumn::make('duration')
                     ->label('Duration')
                     ->sortable()
-                    ->formatStateUsing(fn ($state) => $state . ' days')
+                    ->formatStateUsing(fn($state) => $state . ' days')
                 // Tables\Columns\ImageColumn::make('images'),
             ])
             ->filters([

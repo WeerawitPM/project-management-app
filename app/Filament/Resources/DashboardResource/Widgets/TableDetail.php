@@ -24,7 +24,7 @@ class TableDetail extends BaseWidget
             ->heading("")
             ->query(
                 ProjectDetail::query()
-                    ->selectRaw('*, (julianday(end_date) - julianday(start_date) + 1) as duration')
+                    ->selectRaw('*, (end_date::date - start_date::date + 1) as duration')
                     ->where('project_head_id', $this->id)
             )
             ->defaultSort('id', 'desc')
@@ -56,7 +56,7 @@ class TableDetail extends BaseWidget
                     ->summarize(
                         Sum::make()
                             ->label('')
-                            ->formatStateUsing(fn ($state) => $state . ' days')
+                            ->formatStateUsing(fn($state) => $state . ' days')
                     ),
                 // ->default(
                 //     fn(ProjectDetail $record) => $record->start_date && $record->end_date
