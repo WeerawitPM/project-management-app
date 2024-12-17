@@ -49,17 +49,26 @@ class ProjectDetailResource extends Resource
                             })->pluck('name', 'id');
                         }
                         return []; // คืนค่าว่างถ้าไม่ได้เลือก project_head
-                    }),
-                // ->options(ProjectPhase::all()->pluck('name', 'id')),
-                // Forms\Components\DatePicker::make('start_date')
-                //     ->required(),
-                // Forms\Components\DatePicker::make('end_date')
-                //     ->required(),
+                    })
+                    ->hidden(fn($operation) => $operation === 'edit'),
+                Select::make('project_phase_id')
+                    ->required()
+                    ->label('Project phase')
+                    ->options(ProjectPhase::all()->pluck('name', 'id'))
+                    ->hidden(fn($operation) => $operation === 'create'),
+                // เงื่อนไขแสดง start_date และ end_date เฉพาะในหน้า Edit
+                Forms\Components\DatePicker::make('start_date')
+                    ->required()
+                    ->hidden(fn($operation) => $operation === 'create'),
+                Forms\Components\DatePicker::make('end_date')
+                    ->required()
+                    ->hidden(fn($operation) => $operation === 'create'),
                 Select::make('status_id')
                     ->required()
                     ->label('Project status')
                     ->options(ProjectDetailStatus::all()->pluck('name', 'id')),
                 TextInput::make('days')
+                    ->hidden(fn($operation) => $operation === 'edit'),
             ]);
     }
 
