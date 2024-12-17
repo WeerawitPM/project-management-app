@@ -70,7 +70,7 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-m-pencil-square')
             ])
             ->plugins([
-                // \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 FilamentEditProfilePlugin::make()
                     ->shouldRegisterNavigation(false)
                     ->shouldShowDeleteAccountForm()
