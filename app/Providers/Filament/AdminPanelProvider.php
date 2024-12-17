@@ -75,11 +75,11 @@ class AdminPanelProvider extends PanelProvider
                     ->shouldRegisterNavigation(false)
                     ->shouldShowDeleteAccountForm()
                     ->shouldShowBrowserSessionsForm()
-                    ->shouldShowEditProfileForm()
+                    ->shouldShowEditProfileForm(false)
                     ->shouldShowAvatarForm()
-                    // ->customProfileComponents([
-                    //     \App\Livewire\CustomProfileComponent::class,
-                    // ])
+                    ->customProfileComponents([
+                        \App\Livewire\CustomProfileComponent::class,
+                    ])
             ]);
     }
 }

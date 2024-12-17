@@ -32,6 +32,7 @@ class ProjectRemarkResource extends Resource
                 Select::make('project_head_id')
                     ->required()
                     ->label('Project')
+                    ->columnSpanFull()
                     ->options(ProjectHead::all()->pluck('name', 'id')),
                 RichEditor::make('remark')
                     ->columnSpanFull(),
