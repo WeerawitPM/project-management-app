@@ -64,7 +64,7 @@ class TableRemarks extends BaseWidget
                 //
             ])
             ->actions([
-                ViewAction::make('view')
+                ViewAction::make('View')
                     ->button()
                     ->color('primary')
                     ->modalHeading('Remark Details')

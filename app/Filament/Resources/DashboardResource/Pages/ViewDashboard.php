@@ -53,7 +53,8 @@ class ViewDashboard extends Page
         return [
             Action::make('View Remarks')
                 ->icon('heroicon-o-eye')
-                ->url(DashboardResource::getUrl('remarks', ['record' => $this->data['id']])),
+                ->url(DashboardResource::getUrl('remarks', ['record' => $this->data['id']]))
+                ->openUrlInNewTab(),
         ];
     }
 

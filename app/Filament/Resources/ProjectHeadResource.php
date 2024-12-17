@@ -48,6 +48,7 @@ class ProjectHeadResource extends Resource
                 Forms\Components\DatePicker::make('end_date'),
                 // ->required(),
                 Forms\Components\FileUpload::make('images')
+                    ->columnSpanFull()
                     ->image()
                     ->multiple() // เพิ่มบรรทัดนี้เพื่อรองรับการอัปโหลดหลายไฟล์
                     ->imageEditor()
@@ -58,6 +59,7 @@ class ProjectHeadResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -67,7 +69,11 @@ class ProjectHeadResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('id')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('company.name')
                     ->sortable(),

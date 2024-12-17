@@ -73,8 +73,12 @@ class ProjectDetailResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('id')
+                    ->label('Project')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('project_head.name')
                     ->label('Project')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('project_phase.name')
                     ->label('Phase')
