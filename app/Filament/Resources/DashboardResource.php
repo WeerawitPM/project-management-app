@@ -9,6 +9,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\Summarizers\Sum;
 
 class DashboardResource extends Resource
 {
@@ -30,6 +31,10 @@ class DashboardResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(
+                ProjectHead::query()
+                    ->selectRaw('*, (julianday(end_date) - julianday(start_date) + 1) as duration')
+            )
             ->defaultSort("id", 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
@@ -55,6 +60,10 @@ class DashboardResource extends Resource
                     }),
                 Tables\Columns\TextColumn::make('start_date')->date('d/m/Y')->sortable(),
                 Tables\Columns\TextColumn::make('end_date')->date('d/m/Y')->sortable(),
+                Tables\Columns\TextColumn::make('duration')
+                    ->label('Duration')
+                    ->sortable()
+                    ->formatStateUsing(fn ($state) => $state . ' days')
                 // Tables\Columns\ImageColumn::make('images'),
             ])
             ->filters([

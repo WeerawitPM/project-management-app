@@ -7,6 +7,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Support\Facades\Route;
+use Carbon\Carbon;
+use Filament\Tables\Columns\Summarizers\Sum;
 
 class TableDetail extends BaseWidget
 {
@@ -21,7 +23,9 @@ class TableDetail extends BaseWidget
         return $table
             ->heading("")
             ->query(
-                ProjectDetail::query()->where('project_head_id', $this->id)
+                ProjectDetail::query()
+                    ->selectRaw('*, (julianday(end_date) - julianday(start_date) + 1) as duration')
+                    ->where('project_head_id', $this->id)
             )
             ->defaultSort('id', 'desc')
             ->columns([
@@ -45,6 +49,20 @@ class TableDetail extends BaseWidget
                 Tables\Columns\TextColumn::make('end_date')
                     ->date('d/m/Y')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('duration')
+                    ->label('Duration')
+                    ->sortable()
+                    // ->formatStateUsing(fn ($state) => $state . ' days')
+                    ->summarize(
+                        Sum::make()
+                            ->label('')
+                            ->formatStateUsing(fn ($state) => $state . ' days')
+                    ),
+                // ->default(
+                //     fn(ProjectDetail $record) => $record->start_date && $record->end_date
+                //     ? Carbon::parse($record->start_date)->diffInDays(Carbon::parse($record->end_date)) + 1
+                //     : "N/A"
+                // ),
                 Tables\Columns\TextColumn::make('status.name')
                     ->label('Status')
                     ->sortable()

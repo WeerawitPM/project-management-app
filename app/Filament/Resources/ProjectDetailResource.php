@@ -87,10 +87,10 @@ class ProjectDetailResource extends Resource
                     ->label('Phase')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_date')
-                    ->date()
+                    ->date('d/m/Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('end_date')
-                    ->date()
+                    ->date('d/m/Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status.name')
                     ->label('Status')

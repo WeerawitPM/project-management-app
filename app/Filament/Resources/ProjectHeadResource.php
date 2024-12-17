@@ -86,8 +86,8 @@ class ProjectHeadResource extends Resource
                         'รอการอนุมัติ' => 'warning',
                         'อนุมัติแล้ว' => 'success',
                     }),
-                Tables\Columns\TextColumn::make('start_date')->date()->sortable(),
-                Tables\Columns\TextColumn::make('end_date')->date()->sortable(),
+                Tables\Columns\TextColumn::make('start_date')->date('d/m/Y')->sortable(),
+                Tables\Columns\TextColumn::make('end_date')->date('d/m/Y')->sortable(),
                 Tables\Columns\ImageColumn::make('images'),
             ])
             ->filters([

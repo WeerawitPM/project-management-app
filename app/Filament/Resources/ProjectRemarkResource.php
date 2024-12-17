@@ -60,10 +60,10 @@ class ProjectRemarkResource extends Resource
                 Tables\Columns\TextColumn::make('project_head.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_date')
-                    ->date()
+                    ->date('d/m/Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('end_date')
-                    ->date()
+                    ->date('d/m/Y')
                     ->sortable(),
             ])
             ->filters([

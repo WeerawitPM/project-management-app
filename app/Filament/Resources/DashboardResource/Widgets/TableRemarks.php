@@ -52,6 +52,7 @@ class TableRemarks extends BaseWidget
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('project_head.name')
+                    ->label('Project')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_date')
                     ->date('d/m/Y')

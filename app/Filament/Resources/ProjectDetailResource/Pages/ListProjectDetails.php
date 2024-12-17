@@ -47,6 +47,9 @@ class ListProjectDetails extends ListRecords
                             $saveData['start_date'] = $start_date->toDateString(); // กลับเป็น string วันที่
                             $saveData['end_date'] = $end_date->toDateString();     // กลับเป็น string วันที่
         
+                            ProjectHead::where('id', $data['project_head_id'])
+                                ->update(['end_date' => $saveData['end_date']]);
+
                             // dd($saveData, $data);
                             break;
                     }
