@@ -15,10 +15,6 @@ class RedirectToWeb
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // ตรวจสอบว่า URL ไม่ได้เริ่มต้นด้วย /web
-        // if (!str_starts_with($request->path(), 'web')) {
-        //     return redirect('/web/');
-        // }
         // return $next($request);
         return redirect('/web/');
     }
