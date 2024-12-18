@@ -68,7 +68,7 @@ class ProjectHeadResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->defaultSort('id', 'desc')
+            ->defaultSort('id', 'asc')
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

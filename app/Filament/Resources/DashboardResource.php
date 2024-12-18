@@ -37,7 +37,7 @@ class DashboardResource extends Resource
                 ProjectHead::query()
                     ->selectRaw('*, (end_date::date - start_date::date + 1) as duration')
             )
-            ->defaultSort("id", 'desc')
+            ->defaultSort("id", 'asc')
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
