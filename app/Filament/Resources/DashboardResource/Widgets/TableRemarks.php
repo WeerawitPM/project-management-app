@@ -60,19 +60,23 @@ class TableRemarks extends BaseWidget
                 Tables\Columns\TextColumn::make('end_date')
                     ->date('d/m/Y')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('remark')
+                    ->label('Remark')
+                    ->html(),
+
             ])
             ->filters([
                 //
             ])
             ->actions([
-                ViewAction::make('View')
-                    ->button()
-                    ->color('primary')
-                    ->modalHeading('Remark Details')
-                    ->form([
-                        RichEditor::make('remark')
-                            ->label('Remark')
-                    ]),
+                // ViewAction::make('View')
+                //     ->button()
+                //     ->color('primary')
+                //     ->modalHeading('Remark Details')
+                //     ->form([
+                //         RichEditor::make('remark')
+                //             ->label('Remark')
+                //     ]),
             ]);
     }
 }

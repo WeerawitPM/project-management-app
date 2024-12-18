@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DashboardResource\Pages;
+use App\Models\ProjectDetail;
 use App\Models\ProjectHead;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
@@ -12,6 +13,7 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Filters\Filter;
+use App\Tables\Columns\ProgressColumn;
 
 class DashboardResource extends Resource
 {
@@ -50,8 +52,10 @@ class DashboardResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('company.name')
+                    ->badge()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('assign.name')
+                    ->badge()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('request_by')
                     ->sortable()
@@ -70,7 +74,27 @@ class DashboardResource extends Resource
                     ->label('Duration')
                     ->badge()
                     ->sortable()
-                    ->formatStateUsing(fn($state) => $state . ' days')
+                    ->formatStateUsing(fn($state) => $state . ' days'),
+                ProgressColumn::make('progress')
+                    ->default(function ($record) {
+                        // dd($record->id);
+                        $project_details = ProjectDetail::where('project_head_id', $record->id)->get();
+                        if ($project_details->isNotEmpty()) {
+                            $count = $project_details->count();
+                            $percent = 100 / $count;
+                            $total_percent = 0;
+
+                            foreach ($project_details as $project_detail) {
+                                if ($project_detail->status->id == 3) {
+                                    $total_percent += $percent;
+                                }
+                            }
+
+                            return $total_percent;
+                        }
+                        return 0;
+                        // dd($project_details);
+                    }),
                 // Tables\Columns\ImageColumn::make('images'),
             ])
             ->filters([
