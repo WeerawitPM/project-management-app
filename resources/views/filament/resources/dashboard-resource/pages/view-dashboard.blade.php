@@ -1,7 +1,8 @@
 <x-filament-panels::page>
     @if ($data['logo'])
         <div class="flex justify-center">
-            <img src="/storage/{{ $data['logo'] }}" alt="Logo" class="w-[200px] h-[200px] object-cover rounded-full" />
+            <img src="/storage/{{ $data['logo'] }}" alt="Logo" class="object-cover rounded-full"
+                style="width: 200px; height:200px" />
         </div>
     @endif
     {{ $this->form }}
