@@ -27,7 +27,7 @@ class TableDetail extends BaseWidget
                     ->selectRaw('*, (end_date::date - start_date::date + 1) as duration')
                     ->where('project_head_id', $this->id)
             )
-            ->defaultSort('id', 'desc')
+            // ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -42,6 +42,7 @@ class TableDetail extends BaseWidget
                     ->sortable(),
                 Tables\Columns\TextColumn::make('project_phase.name')
                     ->label('Phase')
+                    ->badge()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_date')
                     ->date('d/m/Y')
@@ -51,6 +52,7 @@ class TableDetail extends BaseWidget
                     ->sortable(),
                 Tables\Columns\TextColumn::make('duration')
                     ->label('Duration')
+                    ->badge()
                     ->sortable()
                     // ->formatStateUsing(fn ($state) => $state . ' days')
                     ->summarize(

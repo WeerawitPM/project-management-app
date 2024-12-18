@@ -13,7 +13,8 @@ class ProjectHead extends Model
         'status_id',
         'start_date',
         'end_date',
-        'images'
+        'images',
+        'request_by',
     ];
 
     protected $casts = [

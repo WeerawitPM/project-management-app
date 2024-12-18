@@ -54,6 +54,8 @@ class ProjectHeadResource extends Resource
                     ->required(),
                 Forms\Components\DatePicker::make('end_date'),
                 // ->required(),
+                Forms\Components\TextInput::make('request_by')
+                    ->required(),
                 Forms\Components\FileUpload::make('images')
                     ->columnSpanFull()
                     ->image()
@@ -86,6 +88,9 @@ class ProjectHeadResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('assign.name')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('request_by')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('status.name')
                     ->sortable()
                     ->badge()

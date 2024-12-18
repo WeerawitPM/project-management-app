@@ -4,12 +4,14 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\DashboardResource\Pages;
 use App\Models\ProjectHead;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Filters\Filter;
 
 class DashboardResource extends Resource
 {
@@ -51,6 +53,10 @@ class DashboardResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('assign.name')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('request_by')
+                    ->sortable()
+                    ->searchable()
+                    ->badge(),
                 Tables\Columns\TextColumn::make('status.name')
                     ->sortable()
                     ->badge()
@@ -62,12 +68,46 @@ class DashboardResource extends Resource
                 Tables\Columns\TextColumn::make('end_date')->date('d/m/Y')->sortable(),
                 Tables\Columns\TextColumn::make('duration')
                     ->label('Duration')
+                    ->badge()
                     ->sortable()
                     ->formatStateUsing(fn($state) => $state . ' days')
                 // Tables\Columns\ImageColumn::make('images'),
             ])
             ->filters([
-                //
+                Filter::make('Year')
+                    ->form([
+                        Select::make('year_from')
+                            ->label('From Year')
+                            ->options(
+                                ProjectHead::query()
+                                    ->selectRaw('DISTINCT EXTRACT(YEAR FROM start_date) as year')
+                                    ->orderBy('year', 'desc')
+                                    ->pluck('year', 'year')
+                                    ->toArray()
+                            )
+                            ->placeholder('Select Start Year'),
+                        Select::make('year_to')
+                            ->label('To Year')
+                            ->options(
+                                ProjectHead::query()
+                                    ->selectRaw('DISTINCT EXTRACT(YEAR FROM start_date) as year')
+                                    ->orderBy('year', 'desc')
+                                    ->pluck('year', 'year')
+                                    ->toArray()
+                            )
+                            ->placeholder('Select End Year'),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when(
+                                $data['year_from'],
+                                fn($query, $year) => $query->whereYear('start_date', '>=', $year)
+                            )
+                            ->when(
+                                $data['year_to'],
+                                fn($query, $year) => $query->whereYear('start_date', '<=', $year)
+                            );
+                    })
             ])
             ->actions([
                 Action::make('View')
