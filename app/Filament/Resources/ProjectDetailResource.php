@@ -46,7 +46,9 @@ class ProjectDetailResource extends Resource
                         if ($selectedProjectHeadId) {
                             return ProjectPhase::whereDoesntHave('projectDetails', function ($query) use ($selectedProjectHeadId) {
                                 $query->where('project_head_id', $selectedProjectHeadId);
-                            })->pluck('name', 'id');
+                            })
+                                ->orderBy('id', 'asc') // เพิ่มการเรียงลำดับตาม id
+                                ->pluck('name', 'id');
                         }
                         return []; // คืนค่าว่างถ้าไม่ได้เลือก project_head
                     })
