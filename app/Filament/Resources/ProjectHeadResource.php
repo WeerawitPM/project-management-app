@@ -40,10 +40,12 @@ class ProjectHeadResource extends Resource
                     ->required(),
                 Select::make('company_id')
                     ->required()
+                    ->searchable()
                     ->label('Company')
                     ->options(Company::all()->pluck('name', 'id')),
                 Select::make('assign_id')
                     ->required()
+                    ->searchable()
                     ->label('Assign')
                     ->options(Assign::all()->pluck('name', 'id')),
                 Select::make('status_id')
@@ -56,6 +58,11 @@ class ProjectHeadResource extends Resource
                 // ->required(),
                 Forms\Components\TextInput::make('request_by')
                     ->required(),
+                Forms\Components\FileUpload::make('logo')
+                    ->columnSpanFull()
+                    ->image()
+                    ->imageEditor()
+                    ->directory('images'),
                 Forms\Components\FileUpload::make('images')
                     ->columnSpanFull()
                     ->image()
@@ -80,15 +87,21 @@ class ProjectHeadResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('id')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\ImageColumn::make('logo')
+                    ->circular(),
                 Tables\Columns\TextColumn::make('name')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('company.name')
+                    ->badge()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('assign.name')
+                    ->badge()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('request_by')
+                    ->badge()
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status.name')

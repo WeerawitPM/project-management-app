@@ -49,6 +49,8 @@ class DashboardResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\ImageColumn::make('logo')
+                    ->circular(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('company.name')

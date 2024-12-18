@@ -30,6 +30,7 @@ return new class extends Migration {
             $table->date('end_date')->nullable();
             $table->string('images')->nullable();
             $table->string('request_by')->nullable();
+            $table->string('logo')->nullable();
         });
     }
 

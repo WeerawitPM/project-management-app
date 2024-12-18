@@ -30,6 +30,7 @@ class ProjectRemarkResource extends Resource
         return $form
             ->schema([
                 Select::make('project_head_id')
+                    ->searchable()
                     ->required()
                     ->label('Project')
                     ->columnSpanFull()
@@ -59,6 +60,7 @@ class ProjectRemarkResource extends Resource
                 Tables\Columns\TextColumn::make('id')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('project_head.name')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_date')
                     ->date('d/m/Y')

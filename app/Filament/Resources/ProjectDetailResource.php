@@ -34,6 +34,7 @@ class ProjectDetailResource extends Resource
             ->schema([
                 Select::make('project_head_id')
                     ->required()
+                    ->searchable()
                     ->label('Project')
                     ->options(ProjectHead::all()->pluck('name', 'id'))
                     ->reactive() // ทำให้ Select นี้ส่งค่าแบบทันทีเมื่อเปลี่ยน
