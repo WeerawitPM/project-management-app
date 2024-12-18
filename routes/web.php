@@ -18,9 +18,11 @@ use Illuminate\Support\Facades\Route;
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-Route::middleware(RedirectToWeb::class)->group(function () {
-    Route::get('/', function () {
-    });
-});
+// Route::middleware(RedirectToWeb::class)->group(function () {
+//     Route::get('/', function () {
+//     });
+// });
 
-require __DIR__.'/auth.php';
+Route::get('/', fn() => redirect('web'));
+
+require __DIR__ . '/auth.php';
