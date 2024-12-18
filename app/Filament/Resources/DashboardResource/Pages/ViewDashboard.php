@@ -5,7 +5,6 @@ namespace App\Filament\Resources\DashboardResource\Pages;
 use App\Filament\Resources\DashboardResource;
 use App\Models\ProjectHead;
 use Filament\Actions\Action;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
@@ -47,7 +46,6 @@ class ViewDashboard extends Page
             $this->data = $data;
         }
         // dd($this->data['images']);
-        // dd($this->data);
     }
 
     protected function getHeaderActions(): array
@@ -66,11 +64,6 @@ class ViewDashboard extends Page
             Section::make()
                 ->columns(2)
                 ->schema([
-                    FileUpload::make('logo')
-                        ->disabled()
-                        ->avatar()
-                        ->alignCenter()
-                        ->columnSpanFull(),
                     TextInput::make("data.name")
                         ->label('Project Name')
                         ->readOnly(),

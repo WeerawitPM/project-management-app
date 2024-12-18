@@ -1,4 +1,9 @@
 <x-filament-panels::page>
+    @if ($data['logo'])
+        <div class="flex justify-center">
+            <img src="/storage/{{ $data['logo'] }}" alt="Logo" class="w-36 h-36 object-cover rounded-full" />
+        </div>
+    @endif
     {{ $this->form }}
     @livewire(\App\Filament\Resources\DashboardResource\Widgets\TableDetail::class)
 
