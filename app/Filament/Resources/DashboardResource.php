@@ -38,6 +38,7 @@ class DashboardResource extends Resource
             ->query(
                 ProjectHead::query()
                     ->selectRaw('*, (end_date::date - start_date::date + 1) as duration')
+                    // ->selectRaw("*, (julianday(end_date) - julianday(start_date) + 1) as duration")
             )
             ->defaultSort("id", 'asc')
             ->columns([
@@ -107,6 +108,7 @@ class DashboardResource extends Resource
                             ->options(
                                 ProjectHead::query()
                                     ->selectRaw('DISTINCT EXTRACT(YEAR FROM start_date) as year')
+                                    // ->selectRaw('DISTINCT strftime(\'%Y\', start_date) as year')
                                     ->orderBy('year', 'desc')
                                     ->pluck('year', 'year')
                                     ->toArray()
@@ -117,6 +119,7 @@ class DashboardResource extends Resource
                             ->options(
                                 ProjectHead::query()
                                     ->selectRaw('DISTINCT EXTRACT(YEAR FROM start_date) as year')
+                                    // ->selectRaw('DISTINCT strftime(\'%Y\', start_date) as year')
                                     ->orderBy('year', 'desc')
                                     ->pluck('year', 'year')
                                     ->toArray()

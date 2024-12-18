@@ -15,7 +15,7 @@ class ProjectHead extends Model
         'end_date',
         'images',
         'request_by',
-        'logo,'
+        'logo',
     ];
 
     protected $casts = [
