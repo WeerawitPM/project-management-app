@@ -157,11 +157,9 @@ class DashboardResource extends Resource
                     ->label('Company')
                     ->options(Company::all()->pluck('name', 'id'))
                     ->searchable(),
-
                 SelectFilter::make('status_id')
                     ->label('Status')
-                    ->options(ProjectStatus::all()->pluck('name', 'id'))
-                    ->searchable(),
+                    ->options(ProjectStatus::all()->pluck('name', 'id')),
             ], layout: FiltersLayout::AboveContent)
             ->actions([
                 Action::make('View')

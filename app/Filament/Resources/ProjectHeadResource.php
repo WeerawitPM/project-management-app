@@ -13,6 +13,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -125,7 +126,15 @@ class ProjectHeadResource extends Resource
                 Tables\Columns\ImageColumn::make('images'),
             ])
             ->filters([
-                //
+                SelectFilter::make('company_id')
+                    ->label('Company')
+                    ->options(Company::all()->pluck('name', 'id')),
+                SelectFilter::make('status_id')
+                    ->label('Status')
+                    ->options(ProjectStatus::all()->pluck('name', 'id')),
+                SelectFilter::make('status_new_old_id')
+                    ->label('New old status')
+                    ->options(ProjectStatusNewOld::all()->pluck('name', 'id')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

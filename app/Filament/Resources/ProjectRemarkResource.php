@@ -74,6 +74,8 @@ class ProjectRemarkResource extends Resource
                 Tables\Columns\TextColumn::make('end_date')
                     ->date('d/m/Y')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('remark')
+                    ->html()
             ])
             ->filters([
                 //
