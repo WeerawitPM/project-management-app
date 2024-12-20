@@ -3,13 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DashboardResource\Pages;
+use App\Models\Company;
 use App\Models\ProjectDetail;
 use App\Models\ProjectHead;
+use App\Models\ProjectStatus;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Filters\Filter;
@@ -38,7 +42,7 @@ class DashboardResource extends Resource
             ->query(
                 ProjectHead::query()
                     ->selectRaw('*, (end_date::date - start_date::date + 1) as duration')
-                    // ->selectRaw("*, (julianday(end_date) - julianday(start_date) + 1) as duration")
+                // ->selectRaw("*, (julianday(end_date) - julianday(start_date) + 1) as duration")
             )
             ->defaultSort("id", 'asc')
             ->columns([
@@ -68,8 +72,9 @@ class DashboardResource extends Resource
                     ->sortable()
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'รอการอนุมัติ' => 'warning',
-                        'อนุมัติแล้ว' => 'success',
+                        'รอการอนุมัติ' => 'danger',
+                        'อนุมัติแล้ว' => 'primary',
+                        'เสร็จสิ้น' => 'success',
                     }),
                 Tables\Columns\TextColumn::make('start_date')->date('d/m/Y')->sortable(),
                 Tables\Columns\TextColumn::make('end_date')->date('d/m/Y')->sortable(),
@@ -101,7 +106,7 @@ class DashboardResource extends Resource
                 // Tables\Columns\ImageColumn::make('images'),
             ])
             ->filters([
-                Filter::make('Year')
+                Filter::make('year_from')
                     ->form([
                         Select::make('year_from')
                             ->label('From Year')
@@ -114,6 +119,16 @@ class DashboardResource extends Resource
                                     ->toArray()
                             )
                             ->placeholder('Select Start Year'),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when(
+                                $data['year_from'],
+                                fn($query, $year) => $query->whereYear('start_date', '>=', $year)
+                            );
+                    }),
+                Filter::make('year_to')
+                    ->form([
                         Select::make('year_to')
                             ->label('To Year')
                             ->options(
@@ -129,15 +144,20 @@ class DashboardResource extends Resource
                     ->query(function ($query, array $data) {
                         return $query
                             ->when(
-                                $data['year_from'],
-                                fn($query, $year) => $query->whereYear('start_date', '>=', $year)
-                            )
-                            ->when(
                                 $data['year_to'],
                                 fn($query, $year) => $query->whereYear('start_date', '<=', $year)
                             );
-                    })
-            ])
+                    }),
+                SelectFilter::make('company_id')
+                    ->label('Company')
+                    ->options(Company::all()->pluck('name', 'id'))
+                    ->searchable(),
+
+                SelectFilter::make('status_id')
+                    ->label('Status')
+                    ->options(ProjectStatus::all()->pluck('name', 'id'))
+                    ->searchable(),
+            ], layout: FiltersLayout::AboveContent)
             ->actions([
                 Action::make('View')
                     ->button()

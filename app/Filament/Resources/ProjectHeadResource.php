@@ -108,8 +108,9 @@ class ProjectHeadResource extends Resource
                     ->sortable()
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'รอการอนุมัติ' => 'warning',
-                        'อนุมัติแล้ว' => 'success',
+                        'รอการอนุมัติ' => 'danger',
+                        'อนุมัติแล้ว' => 'primary',
+                        'เสร็จสิ้น' => 'success',
                     }),
                 Tables\Columns\TextColumn::make('start_date')->date('d/m/Y')->sortable(),
                 Tables\Columns\TextColumn::make('end_date')->date('d/m/Y')->sortable(),

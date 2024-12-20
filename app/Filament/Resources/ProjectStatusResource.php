@@ -49,8 +49,9 @@ class ProjectStatusResource extends Resource
                     ->searchable()
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'รอการอนุมัติ' => 'warning',
-                        'อนุมัติแล้ว' => 'success',
+                        'รอการอนุมัติ' => 'danger',
+                        'อนุมัติแล้ว' => 'primary',
+                        'เสร็จสิ้น' => 'success',
                     }),
                 Tables\Columns\TextColumn::make('status')
                     ->numeric()
