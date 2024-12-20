@@ -16,6 +16,7 @@ class ProjectHead extends Model
         'images',
         'request_by',
         'logo',
+        'status_new_old_id',
     ];
 
     protected $casts = [
@@ -35,5 +36,10 @@ class ProjectHead extends Model
     public function status()
     {
         return $this->belongsTo(ProjectStatus::class);
+    }
+
+    public function status_new_old()
+    {
+        return $this->belongsTo(ProjectStatusNewOld::class);
     }
 }

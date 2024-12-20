@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class ProjectRemark extends Model
 {
     protected $fillable = [
-        'project_head_id',
+        'project_detail_id',
         'remark',
         'start_date',
         'end_date',
     ];
 
-    public function project_head()
+    public function project_detail()
     {
-        return $this->belongsTo(ProjectHead::class);
+        return $this->belongsTo(ProjectDetail::class);
     }
 }

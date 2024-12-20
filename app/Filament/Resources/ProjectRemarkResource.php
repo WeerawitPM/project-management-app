@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProjectRemarkResource\Pages;
 use App\Filament\Resources\ProjectRemarkResource\RelationManagers;
+use App\Models\ProjectDetail;
 use App\Models\ProjectHead;
 use App\Models\ProjectRemark;
 use Filament\Forms;
@@ -29,12 +30,14 @@ class ProjectRemarkResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('project_head_id')
+                Select::make('project_detail_id')
                     ->searchable()
                     ->required()
                     ->label('Project')
                     ->columnSpanFull()
-                    ->options(ProjectHead::all()->pluck('name', 'id')),
+                    ->options(ProjectDetail::all()->mapWithKeys(function ($record) {
+                        return [$record->id => "{$record->project_head->name} - {$record->project_phase->name}"];
+                    })),
                 RichEditor::make('remark')
                     ->columnSpanFull(),
                 Forms\Components\DatePicker::make('start_date')
@@ -59,7 +62,10 @@ class ProjectRemarkResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('id')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('project_head.name')
+                Tables\Columns\TextColumn::make('project_detail.project_head.name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('project_detail.project_phase.name')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_date')
@@ -80,12 +86,12 @@ class ProjectRemarkResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->groups(
-                [
-                    Group::make('project_head.name')
-                        ->label('Project')
-                ]
-            );
+            // ->groups(
+            //     [
+            //         Group::make('project_head.name')
+            //             ->label('Project')
+            //     ]
+            // );
         ;
     }
 

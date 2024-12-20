@@ -36,7 +36,9 @@ class ProjectDetailResource extends Resource
                     ->required()
                     ->searchable()
                     ->label('Project')
-                    ->options(ProjectHead::all()->pluck('name', 'id'))
+                    ->options(ProjectHead::all()->mapWithKeys(function ($record) {
+                        return [$record->id => "{$record->name} - {$record->company->name}"];
+                    }))
                     ->reactive() // ทำให้ Select นี้ส่งค่าแบบทันทีเมื่อเปลี่ยน
                     ->afterStateUpdated(fn($state, callable $set) => $set('project_phase_id', null)), // ล้างค่า phase เมื่อเปลี่ยน project
                 Select::make('project_phase_id')

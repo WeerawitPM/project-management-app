@@ -8,6 +8,7 @@ use App\Models\Assign;
 use App\Models\Company;
 use App\Models\ProjectHead;
 use App\Models\ProjectStatus;
+use App\Models\ProjectStatusNewOld;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -48,6 +49,10 @@ class ProjectHeadResource extends Resource
                     ->searchable()
                     ->label('Assign')
                     ->options(Assign::all()->pluck('name', 'id')),
+                Select::make('status_new_old_id')
+                    ->required()
+                    ->label('New old status')
+                    ->options(ProjectStatusNewOld::all()->pluck('name', 'id')),
                 Select::make('status_id')
                     ->required()
                     ->label('Status')
@@ -104,6 +109,9 @@ class ProjectHeadResource extends Resource
                     ->badge()
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('status_new_old.name')
+                    ->sortable()
+                    ->badge(),
                 Tables\Columns\TextColumn::make('status.name')
                     ->sortable()
                     ->badge()

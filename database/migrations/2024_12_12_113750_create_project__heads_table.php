@@ -31,6 +31,10 @@ return new class extends Migration {
             $table->string('images')->nullable();
             $table->string('request_by')->nullable();
             $table->string('logo')->nullable();
+            $table->foreignId('status_new_old_id')
+                ->nullable()
+                ->constrained('project_status_new_olds')
+                ->nullOnDelete();
         });
     }
 

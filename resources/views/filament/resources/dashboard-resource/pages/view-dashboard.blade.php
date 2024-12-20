@@ -7,6 +7,7 @@
     @endif
     {{ $this->form }}
     @livewire(\App\Filament\Resources\DashboardResource\Widgets\TableDetail::class)
+    @livewire(\App\Filament\Resources\DashboardResource\Widgets\TableRemarks::class)
 
     @if (count($data['images']) > 0)
         <section id="image-carousel" class="splide" aria-label="Beautiful Images">

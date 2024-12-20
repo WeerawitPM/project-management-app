@@ -58,6 +58,11 @@ class DashboardResource extends Resource
                     ->circular(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('status_new_old.name')
+                    ->label('New Old Status')
+                    ->sortable()
+                    ->badge()
+                    ->color('warning'),
                 Tables\Columns\TextColumn::make('company.name')
                     ->badge()
                     ->sortable(),

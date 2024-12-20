@@ -40,7 +40,7 @@ class TableRemarks extends BaseWidget
         return $table
             ->heading("")
             ->query(
-                ProjectRemark::query()->where('project_head_id', $this->id)
+                ProjectRemark::query()->whereRelation('project_detail', 'project_head_id', $this->id)
             )
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
@@ -51,8 +51,8 @@ class TableRemarks extends BaseWidget
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('project_head.name')
-                    ->label('Project')
+                Tables\Columns\TextColumn::make('project_detail.project_phase.name')
+                    ->label('Phase')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_date')

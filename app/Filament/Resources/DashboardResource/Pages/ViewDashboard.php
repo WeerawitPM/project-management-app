@@ -48,15 +48,15 @@ class ViewDashboard extends Page
         // dd($this->data['images']);
     }
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Action::make('View Remarks')
-                ->icon('heroicon-o-eye')
-                ->url(DashboardResource::getUrl('remarks', ['record' => $this->data['id']]))
-                ->openUrlInNewTab(),
-        ];
-    }
+    // protected function getHeaderActions(): array
+    // {
+    //     return [
+    //         Action::make('View Remarks')
+    //             ->icon('heroicon-o-eye')
+    //             ->url(DashboardResource::getUrl('remarks', ['record' => $this->data['id']]))
+    //             ->openUrlInNewTab(),
+    //     ];
+    // }
 
     protected function getFormSchema(): array
     {
