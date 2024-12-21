@@ -11,7 +11,9 @@ class ProjectDetail extends Model
         'project_phase_id',
         'start_date',
         'end_date',
-        'status_id'
+        'status_id',
+        'actual_start_date',
+        'actual_end_date',
     ];
 
     public function project_head()

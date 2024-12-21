@@ -62,6 +62,8 @@ class ProjectHeadResource extends Resource
                     ->required(),
                 Forms\Components\DatePicker::make('end_date'),
                 // ->required(),
+                Forms\Components\DatePicker::make('actual_start_date'),
+                Forms\Components\DatePicker::make('actual_end_date'),
                 Forms\Components\TextInput::make('request_by')
                     ->required(),
                 Forms\Components\FileUpload::make('logo')
@@ -123,6 +125,8 @@ class ProjectHeadResource extends Resource
                     }),
                 Tables\Columns\TextColumn::make('start_date')->date('d/m/Y')->sortable(),
                 Tables\Columns\TextColumn::make('end_date')->date('d/m/Y')->sortable(),
+                Tables\Columns\TextColumn::make('actual_start_date')->date('d/m/Y')->sortable(),
+                Tables\Columns\TextColumn::make('actual_end_date')->date('d/m/Y')->sortable(),
                 Tables\Columns\ImageColumn::make('images'),
             ])
             ->filters([

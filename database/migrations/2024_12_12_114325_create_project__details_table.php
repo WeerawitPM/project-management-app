@@ -27,6 +27,8 @@ return new class extends Migration {
                 ->nullable()
                 ->constrained('project_detail_statuses')
                 ->nullOnDelete();
+            $table->date('actual_start_date')->nullable();
+            $table->date('actual_end_date')->nullable();
         });
     }
 

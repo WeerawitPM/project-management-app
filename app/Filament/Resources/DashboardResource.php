@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Exports\ProjectHeadExporter;
 use App\Filament\Resources\DashboardResource\Pages;
 use App\Models\Company;
 use App\Models\ProjectDetail;
@@ -18,6 +19,9 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Filters\Filter;
 use App\Tables\Columns\ProgressColumn;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
+use pxlrbt\FilamentExcel\Columns\Column;
 
 class DashboardResource extends Resource
 {
@@ -41,7 +45,7 @@ class DashboardResource extends Resource
         return $table
             ->query(
                 ProjectHead::query()
-                    ->selectRaw('*, (end_date::date - start_date::date + 1) as duration')
+                    ->selectRaw('*, (end_date::date - start_date::date + 1) as duration, (actual_end_date::date - actual_start_date::date + 1) as actual_duration')
                 // ->selectRaw("*, (julianday(end_date) - julianday(start_date) + 1) as duration")
             )
             ->defaultSort("id", 'asc')
@@ -57,6 +61,7 @@ class DashboardResource extends Resource
                 Tables\Columns\ImageColumn::make('logo')
                     ->circular(),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Project Name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status_new_old.name')
                     ->label('New Old Status')
@@ -85,6 +90,13 @@ class DashboardResource extends Resource
                 Tables\Columns\TextColumn::make('end_date')->date('d/m/Y')->sortable(),
                 Tables\Columns\TextColumn::make('duration')
                     ->label('Duration')
+                    ->badge()
+                    ->sortable()
+                    ->formatStateUsing(fn($state) => $state . ' days'),
+                Tables\Columns\TextColumn::make('actual_start_date')->date('d/m/Y')->sortable(),
+                Tables\Columns\TextColumn::make('actual_end_date')->date('d/m/Y')->sortable(),
+                Tables\Columns\TextColumn::make('actual_duration')
+                    ->label('Actual Duration')
                     ->badge()
                     ->sortable()
                     ->formatStateUsing(fn($state) => $state . ' days'),
@@ -169,8 +181,28 @@ class DashboardResource extends Resource
                 // ->openUrlInNewTab()
             ])
             ->bulkActions([
-                //
+                // ExportBulkAction::make()
+                //     ->label('Download Excel File')
+                //     ->icon('heroicon-o-document-arrow-down')
+                //     ->color('success'),
+                ExportBulkAction::make()
+                    ->label('Download Excel File')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->color('success')
+                    ->exports([
+                        ExcelExport::make()
+                            ->withFilename(date('Y-m-d') . ' - export')
+                            ->fromTable()->except([
+                                    'created_at',
+                                    'updated_at',
+                                    'logo',
+                                ]),
+                    ])
             ]);
+        // ->headerActions([
+        //     ExportAction::make()
+        //         ->exporter(ProjectHeadExporter::class)
+        // ]);
     }
 
     public static function getRelations(): array

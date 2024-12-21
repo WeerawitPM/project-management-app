@@ -68,6 +68,10 @@ class ProjectDetailResource extends Resource
                 Forms\Components\DatePicker::make('end_date')
                     ->required()
                     ->hidden(fn($operation) => $operation === 'create'),
+                Forms\Components\DatePicker::make('actual_start_date')
+                    ->hidden(fn($operation) => $operation === 'create'),
+                Forms\Components\DatePicker::make('actual_end_date')
+                    ->hidden(fn($operation) => $operation === 'create'),
                 Select::make('status_id')
                     ->required()
                     ->label('Project status')
@@ -104,6 +108,12 @@ class ProjectDetailResource extends Resource
                     ->date('d/m/Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('end_date')
+                    ->date('d/m/Y')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('actual_start_date')
+                    ->date('d/m/Y')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('actual_end_date')
                     ->date('d/m/Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status.name')

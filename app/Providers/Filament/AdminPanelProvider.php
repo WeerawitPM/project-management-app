@@ -35,6 +35,7 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Blue,
             ])
+            ->databaseNotifications()
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->font('Sarabun', provider: GoogleFontProvider::class)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
